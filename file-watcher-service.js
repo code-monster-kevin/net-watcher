@@ -9,7 +9,7 @@ if (!filename) {
 
 net.createServer(connection => {
   console.log('Subscriber connected');
-  const message = JSON.stringify({ 'type':'watching', 'file': filename });
+  const message = JSON.stringify({ 'type': 'watching', 'file': filename });
   connection.write(`${message}\n`);
 
   const fsmessage = JSON.stringify({ 'type': 'changed', 'timestamp': Date.now() });
