@@ -1,8 +1,9 @@
 'use strict';
 const net = require('net');
 const client = net.connect({ port: '60300' });
-client.on('data', data => {
-  const message = JSON.parse(data);
+const ldj_client = require('./lib/ldj-client.js').connect(client);
+
+ldj_client.on('message', message => {
   if (message.type === 'watching') {
     console.log(`Now watching ${message.file}`);
   } 
@@ -11,6 +12,6 @@ client.on('data', data => {
     console.log(`File changed: ${filedate}`);
   } 
   else {
-    console.log(`Unrecognized message type: ${message.type}`);
+    throw Error(`Unrecognized message type: ${message.type}`);
   }
 });
